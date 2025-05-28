@@ -1,0 +1,20 @@
+3. Dans un pays se trouvent des villes, dont une est la capitale.
+Une ville peut être jumelée à une ville d'un autre pays.
+
+@startuml
+
+class Country {
+    +code: string
+    +name: string
+}
+
+class City {
+    +name: string
+    +postalCode: number
+}
+
+Country "+country 1" -- "+cities 1..*" City
+Country "1" --> "+capital 1" City
+City "0..1" -- "0..1" City: +twin
+
+@enduml

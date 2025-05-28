@@ -1,0 +1,19 @@
+2. Un e-mail est composé d'un objet et d'un contenu,
+est adressé à des destinataires et peut contenir des pièces jointes.
+
+@startuml
+class Email {
+    subject: string
+    content: string
+}
+
+class Contact {
+    name: string
+    email: string
+}
+
+class Attachment
+
+Email "1" -- "+recipients 1..*" Contact
+Email "1" -- "+attachments *" Attachment
+@enduml

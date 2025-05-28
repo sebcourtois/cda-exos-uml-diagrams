@@ -1,0 +1,14 @@
+01 - Un répertoire contient des fichiers
+
+@startuml
+class Directory {
+    name: string
+}
+
+class File {
+    name: string
+    size: int
+}
+
+Directory "1" *-- "*" File: contains
+@enduml

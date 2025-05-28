@@ -1,0 +1,17 @@
+@startuml
+left to right direction
+actor "Employé" as dude
+actor "LDAP" as ldap
+rectangle "Gestion de profil" {
+  usecase "Se Connecter" as login
+  usecase "Authentifier utilisateur" as checkAuth
+  usecase "Rejeter connexion" as failAuth
+}
+
+dude -- login
+login ..> checkAuth
+login <.. failAuth
+checkAuth -- ldap
+failAuth -- ldap
+
+@enduml

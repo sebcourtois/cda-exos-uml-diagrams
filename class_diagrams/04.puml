@@ -1,0 +1,21 @@
+Classes : Distributeur, Ecran, Article, Boisson, Clavier, Gateau
+– Le distributeur est composé d’un écran et d’un clavier de saisie
+– Des articles tel que des boissons ou des gâteaux y sont disponible
+
+@startuml
+'skinparam groupInheritance 3
+class Distributeur
+class Ecran
+class Clavier
+class Article
+class Boisson
+class Gateau
+
+Article <|-- Boisson
+Article <|-- Gateau
+
+Distributeur "1" o-- "1" Ecran
+Distributeur "1" o-- "1" Clavier
+Distributeur "1" -- "0..*" Article: propose
+
+@enduml

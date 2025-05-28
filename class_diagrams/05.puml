@@ -1,0 +1,36 @@
+Modélisation d’une partie d’échec
+
+@startuml
+'skinparam groupInheritance 3
+enum PieceColor {
+    Black
+    White
+}
+
+class Chessboard
+class Square {
+    +color: PieceColor
+    +column: A..H
+    +row: 1..8
+}
+abstract class Piece {
+    +color: PieceColor
+}
+
+class Player {
+    +name: string
+    +rank: integer
+}
+
+Piece <|.. King
+Piece <|.. Queen
+Piece <|.. Rook
+Piece <|.. Bishop
+Piece <|.. Knight
+Piece <|.. Pawn
+
+Chessboard "1" *-- "64" Square: compound
+Player "1" --> "+pieces 16" Piece
+Piece "0..1" --> "+position 0..1" Square
+
+@enduml
