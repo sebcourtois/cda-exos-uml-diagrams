@@ -6,12 +6,26 @@ rectangle "Gestion de profil" {
   usecase "Se Connecter" as login
   usecase "Authentifier utilisateur" as checkAuth
   usecase "Rejeter connexion" as failAuth
+  usecase "Sélectionner photo" as pickPhoto
+  usecase "Transmettre photo" as uploadPhoto
+  usecase "Remplacer photo" as updatePhoto
+  usecase "Notifier succès" as notifySuccess
 }
 
 dude -- login
-login ..> checkAuth
-login <.. failAuth
+dude -- pickPhoto
+dude -- notifySuccess
+
 checkAuth -- ldap
 failAuth -- ldap
+uploadPhoto -- ldap
+updatePhoto -- ldap
+notifySuccess -- ldap
+
+login ..> checkAuth: include
+login <.. failAuth: extend
+pickPhoto ..> uploadPhoto
+pickPhoto <.. updatePhoto
+updatePhoto ..> notifySuccess
 
 @enduml
