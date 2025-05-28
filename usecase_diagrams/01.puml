@@ -1,8 +1,8 @@
 @startuml
 left to right direction
 actor "Employé" as dude
-actor "LDAP" as ldap
-rectangle "Gestion de profil" {
+'actor "LDAP" as ldap
+rectangle "Annuaire LDAP" {
   usecase "Se Connecter" as login
   usecase "Authentifier utilisateur" as checkAuth
   usecase "Rejeter connexion" as failAuth
@@ -16,16 +16,16 @@ dude -- login
 dude -- pickPhoto
 dude -- notifySuccess
 
-checkAuth -- ldap
-failAuth -- ldap
-uploadPhoto -- ldap
-updatePhoto -- ldap
-notifySuccess -- ldap
+'checkAuth -- ldap
+'failAuth -- ldap
+'uploadPhoto -- ldap
+'updatePhoto -- ldap
+'notifySuccess -- ldap
 
 login ..> checkAuth: include
 login <.. failAuth: extend
-pickPhoto ..> uploadPhoto
-pickPhoto <.. updatePhoto
-updatePhoto ..> notifySuccess
+pickPhoto ..> uploadPhoto: include
+pickPhoto <.. updatePhoto: extend
+updatePhoto ..> notifySuccess: include
 
 @enduml
