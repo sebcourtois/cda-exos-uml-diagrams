@@ -1,0 +1,29 @@
+Un freelance (caractérisé par son nom, son prénom, son numéro SIRET)
+peut travailler pour plusieurs entreprises (nom, numéro SIRET, nb. employés).
+Une entreprise peut embaucher plusieurs freelances.
+On cherche à modéliser les dates de début et fin des des missions des freelances
+ainsi que le salaire obtenu pour la mission.
+Indice : se renseigner sur les classe d'association.
+
+@startuml
+
+class Freelance {
+    nom: string
+    prénom: string
+    siret: number
+}
+class Entreprise {
+    nom: string
+    siret: number
+    nbrEmployés: number
+}
+class Mission {
+    dateDébut: Date
+    dateFin: Date
+    salaire: number
+}
+
+Freelance "*" -- "*" Entreprise: emploie
+(Freelance, Entreprise) . Mission
+
+@enduml

@@ -14,8 +14,8 @@ class Gateau
 Article <|-- Boisson
 Article <|-- Gateau
 
-Distributeur "1" o-- "1" Ecran
-Distributeur "1" o-- "1" Clavier
-Distributeur "1" -- "0..*" Article: propose
+Distributeur "1" *-- "1" Ecran
+Distributeur "1" *-- "1" Clavier
+Distributeur "0..1" o-- "0..*" Article: expose >
 
 @enduml

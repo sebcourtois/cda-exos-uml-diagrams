@@ -1,0 +1,12 @@
+Un dessin est soit une forme géométrique simple
+(point, ligne, cercle), soit un groupe de dessins.
+
+@startuml
+
+class Dessin
+class FormeSimple
+
+Dessin <|-- FormeSimple
+Dessin "+parent 0..1" --* "+enfants *" Dessin: groupe >
+
+@enduml

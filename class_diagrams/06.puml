@@ -1,0 +1,24 @@
+Un stagiaire à l’Afpa est caractérisé par son nom, son prénom, son âge.
+Il suit une seule formation menée par un ou plusieurs formateurs.
+Un formateur peut mener une ou plusieurs formations.
+Chaque formation a un et un seul formateur référent.
+Il peut exister une hiérarchie entre les formateurs
+(un formateur peut, mais ce n’est pas une obligation, gérer d’autres formateurs).
+
+@startuml
+
+class Stagiaire {
+    +nom
+    +prenom
+    +âge
+}
+
+class Formateur
+class Formation
+
+Stagiaire "*" -- "1" Formation: suit >
+Formateur "1..*" -- "1..*" Formation: mène >
+Formation "+réferent 1" -- "*" Formateur: se réfère >
+Formateur "0..1" -- "*" Formateur: gère >
+
+@enduml

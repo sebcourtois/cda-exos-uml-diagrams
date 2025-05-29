@@ -1,0 +1,12 @@
+Une ligne de métro relie un ensemble de stations selon un ordre.
+Une station peut apparaître sur plusieurs lignes mais
+ne peut pas être présente plusieurs fois sur la même ligne.
+
+@startuml
+
+class Station
+class Ligne
+
+Ligne "+lignes *" --> "+stations * {ordered}" Station: relie
+
+@enduml

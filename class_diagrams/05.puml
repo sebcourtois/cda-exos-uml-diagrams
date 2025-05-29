@@ -1,0 +1,11 @@
+Une commande de pizzas est composée d'une ou plusieurs pizzas proposées à la carte,
+chaque pizza pouvant être présente plusieurs fois dans la commande.
+
+@startuml
+
+class Pizza
+class Commande
+
+Commande "*" -- "{bag} 1..*" Pizza
+
+@enduml
