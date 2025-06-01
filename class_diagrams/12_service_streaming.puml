@@ -38,10 +38,13 @@ class Film {
 class PlaylistPremium
 class PlaylistGratuite
 
+class Famille
+
 Compte <|-- ComptePremium
 Compte <|-- CompteGratuit
 
 Utilisateur "1" *-- "1" Compte
+Utilisateur "2..5" -- "1" Famille
 
 CompteGratuit "0..*" -- "0..1" Film
 ComptePremium "0..*" -- "0..*" Film
