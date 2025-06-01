@@ -1,0 +1,34 @@
+@startuml
+
+left to right direction
+actor "Client" as client
+rectangle "Application Bancaire" {
+  usecase "Effectuer virement" as makeTransfer
+  usecase "S'identifier" as login
+  usecase "Authentifier client" as checkAuth
+  usecase "Afficher liste comptes" as listAccounts
+  usecase "Choisir compte source" as chooseAccount
+  usecase "Afficher solde" as showBalance
+  usecase "Demander montant" as promptForAmount
+  usecase "Entrer montant" as enterAmount
+  usecase "Choisir compte cible" as chooseTargetAccount
+  usecase "Valider montant saisi" as checkAmount
+  usecase "Confirmer virement" as confirmTransfer
+  usecase "Afficher nouveau solde" as showNewBalance
+}
+
+client -- makeTransfer
+client -- login
+makeTransfer .> login: includes
+login ..> checkAuth: includes
+login <.. listAccounts: extends
+client -- chooseAccount
+chooseAccount ..> showBalance: includes
+chooseAccount ..> promptForAmount: includes
+client -- enterAmount
+client -- chooseTargetAccount
+enterAmount ..> checkAmount: include
+client -- confirmTransfer
+confirmTransfer ..> showNewBalance: includes
+
+@enduml
