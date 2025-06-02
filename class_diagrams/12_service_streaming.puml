@@ -2,22 +2,27 @@ Il vous est demandé de mettre en place un service de streaming en ligne pour co
 Amazon Prime Video (et oui, rien que ça).
 Le site devra être accessible à tout utilisateur enregistré.
 Il existe deux profils d’utilisateurs :
-• Compte découverte (gratuit)
-• Compte premium
-Un utilisateur est défini par son nom et un numéro de compte (unique). Pour les comptes premium
-les informations de paiement sont stockées.
+    • Compte découverte (gratuit)
+    • Compte premium
+
+Un utilisateur est défini par son nom et un numéro de compte (unique).
+Pour les comptes premium les informations de paiement sont stockées.
+
 Tout utilisateur doit pouvoir créer une playlist de films avec les contraintes suivantes :
-• Compte découverte : l’utilisateur ne peut ajouter qu’un seul film à sa playlist et ne peux
+    • Compte découverte : l’utilisateur ne peut ajouter qu’un seul film à sa playlist et ne peux
 regarder qu’un film par jour.
-• Compte premium : pas de limite pour la playlist et le nombre de film qu’il peut regarder.
+    • Compte premium : pas de limite pour la playlist et le nombre de film qu’il peut regarder.
+
 Il est possible pour les utilisateurs de créer une « famille » permettant d’obtenir une réduction sur
 les tarifs du compte premium. Les familles peuvent être composées de maximum 5 personnes.
+
 Tous les utilisateurs doivent avoir la capacité d’effectuer les opérations suivantes :
-• Ajouter un film à leur playlist : attention, la plateforme présente une particularité, l’utilisateur
+    • Ajouter un film à leur playlist : attention, la plateforme présente une particularité, l’utilisateur
 ne peut regarder que les films contenus dans sa playlist
-• Regarder un film de leur playlist : à la fin du visionnage, le film est automatiquement
+    • Regarder un film de leur playlist : à la fin du visionnage, le film est automatiquement
 supprimé de la playlist
-• Le système devra permettre d’afficher la liste des 5 derniers films regardés.
+    • Le système devra permettre d’afficher la liste des 5 derniers films regardés.
+
 Les films sont caractérisés par leur titre, une date de sortie et une liste d’acteurs.
 
 @startuml
@@ -27,28 +32,45 @@ class Utilisateur {
 }
 abstract class Compte {
     id: number
+    lister5DerniersFilmsRegardés()
+
 }
-class ComptePremium
-class CompteGratuit
+class ComptePremium {
+    ajouterFilm()
+    regarderFilm()
+}
+class CompteGratuit {
+    ajouterFilm()
+    regarderFilm()
+}
 class Film {
     titre: string
     dateSortie: Date
     casting: string[]
+    lire()
 }
-class PlaylistPremium
-class PlaylistGratuite
+class Playlist {
+    ajouterFilm()
+    supprimerFilm()
+    lireFilm()
+}
+class Visionnage {
+    dateDernièreLecture: Date
+    dateAjout: Date
+    dateSuppression: Date
+}
 
 class Famille
+class MoyenPaiement
 
-Compte <|-- ComptePremium
-Compte <|-- CompteGratuit
+Compte <|.. ComptePremium
+Compte <|.. CompteGratuit
 
 Utilisateur "1" *-- "1" Compte
-Utilisateur "2..5" -- "1" Famille
-
-CompteGratuit "0..*" -- "0..1" Film
-ComptePremium "0..*" -- "0..*" Film
-(CompteGratuit, Film) . PlaylistGratuite
-(ComptePremium, Film) . PlaylistPremium
+Utilisateur "2..5" -- "0..1" Famille
+Compte "1" *-- "1" Playlist
+Playlist "0..*" -- "0..*" Film
+Visionnage . (Playlist, Film)
+MoyenPaiement "0..*" <-- "1" ComptePremium
 
 @enduml
