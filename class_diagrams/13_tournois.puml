@@ -1,0 +1,73 @@
+La fédération française de tennis de table lève des fonds dédiés à
+la création d’un outil complet de gestion de compétition.
+Cette application pourra être utilisée par les membres d’un club,
+une entreprise ou un particulier souhaitant organiser des compétitions.
+L’outil devra permettre de gérer un ou plusieurs compétitions.
+
+Chaque compétition est définie par plusieurs informations :
+    • Le lieu de la compétition
+    • Les catégories accueillies par la compétition
+    • Le nombre de participant.e.s par catégorie
+
+Les catégories sont définies par plusieurs informations :
+    - L’âge des participants :
+        o Poussins
+        o Benjamins
+        o Minimes
+        o Cadets
+        o Senior
+        o Vétéran
+    - La série :
+        o N1, N2 → national
+        o R1, R2 → régional
+        o D1, D2 → départemental
+    - Le genre :
+        o Femme
+        o Homme
+
+Chaque joueur/joueuse est défini.e par :
+    - Un nombre de points pour le classement global (national)
+    - Un nombre de points propres à la compétition
+
+Les joueurs/joueuses seront réparti.e.s en groupes et chaque groupe est divisé en poules.
+
+@startuml
+enum GroupeAge {
+    Poussins
+    Benjamins
+    Minimes
+    Cadets
+    Senior
+    Vétéran
+}
+enum Genre {
+    Femme
+    Homme
+}
+enum Série {
+    National
+    Regional
+    Départemental
+}
+class Organisateur {
+}
+class Compétition {
+    nom: string
+    lieu: string
+    dateDébut: Date
+    dateFin: Date
+}
+class Catégorie {
+    nbrPlaces: number
+}
+
+class Joueur
+
+Organisateur "1" -- "1..*" Compétition: organise >
+Compétition "1" *-- "1..*" Catégorie: accueille >
+Catégorie "0..*" --> "1" GroupeAge
+Catégorie "0..*" --> "1" Genre
+Catégorie "0..*" --> "1" Série
+Joueur "2..*" -- "1" Catégorie: participe dans >
+
+@enduml
