@@ -62,6 +62,8 @@ class Catégorie {
 }
 
 class Joueur
+class Poule
+class Groupe
 
 Organisateur "1" -- "1..*" Compétition: organise >
 Compétition "1" *-- "1..*" Catégorie: accueille >
@@ -69,5 +71,8 @@ Catégorie "0..*" --> "1" GroupeAge
 Catégorie "0..*" --> "1" Genre
 Catégorie "0..*" --> "1" Série
 Joueur "2..*" -- "1" Catégorie: participe dans >
+Joueur "2..*" --* "1" Poule
+Poule "1..*" --* "1" Groupe
+Groupe "1..*" --* "1" Catégorie
 
 @enduml
