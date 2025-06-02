@@ -1,14 +1,18 @@
 L’Afpa de Rochefort décide de mettre en place une application de co-voiturage pour simplifier la
 mise en contact du personnel et des stagiaires se rendant au centre.
+
 Cette application devra permettre aux utilisateurs de se connecter avec leur identifiant Afpa (unique).
 Une fois connectés, les utilisateurs pourront consulter les trajets disponibles.
+
 Un « trajet » est défini comme un aller simple allant d’un lieu précis (défini par une adresse) au site de l’Afpa.
 Le retour de l’Afpa à l’adresse est aussi considéré comme un trajet.
 Un aller-retour sera appelé un « voyage ».
+
 Les utilisateurs pourront s’inscrire à autant de trajets qu’ils le souhaitent,
 dans la limite des places disponibles dans une voiture
 (on considèrera qu’au maximum 4 places sont disponibles dans un véhicule).
 Lors de l’inscription à un trajet, l’utilisateur devra choisir une durée de validité de son inscription.
+
 Les utilisateurs devront aussi pouvoir inscrire de nouveaux trajets (sans limite de nombre) en
 précisant:
     • leur lieu de départ ;
@@ -25,18 +29,19 @@ de validité devra être prise en compte.
 @startuml
 
 class Utilisateur
-class Trajet {
-    adresseDépart: string
+class Véhicule {
+    type: string
+    nbrBagages: number
+}
+
+abstract class Trajet {
     heureDépart: Time
-    typeVéhicule: string
-    fumeur: boolean
-    dateExpiration: Date
 }
-enum Direction {
-    Aller
-    Retour
-}
-class Inscription {
+
+class Aller
+class Retour
+
+class Passager {
     dateExpiration: Date
 }
 enum JourSemaine {
@@ -45,12 +50,23 @@ enum JourSemaine {
     ...
     Vendredi
 }
+class Voyage {
+    adresseDépart: string
+    fumeur: boolean
+    dateExpiration: Date
+}
 
+Trajet <|.. Aller
+Trajet <|.. Retour
 
-Trajet "0..*" -- "+organisateur 1" Utilisateur: organise <
-Trajet "0..*" --> "1" Direction
-Trajet "0..*" --> "1..*" JourSemaine
-Trajet "+trajets 0..*" -- "+voyageurs 0..4" Utilisateur
-Inscription . (Utilisateur,Trajet)
+JourSemaine "1..*" <-- "0..*" Voyage: a lieu tous les <
+Voyage "0..*" -- "1" Véhicule: utilise >
+Voyage "0..*" -- "1" Utilisateur: organise <
+Aller "1" --* "1" Voyage
+Retour "1" --* "1" Voyage
+
+Utilisateur "1" -- "0..*" Véhicule: possède >
+Trajet "+trajets 0..*" -- "+passagers 0..4" Utilisateur
+Passager . (Trajet, Utilisateur)
 
 @enduml
