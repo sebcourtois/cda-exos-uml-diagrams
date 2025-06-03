@@ -2,7 +2,7 @@ La fédération française de tennis de table lève des fonds dédiés à
 la création d’un outil complet de gestion de compétition.
 Cette application pourra être utilisée par les membres d’un club,
 une entreprise ou un particulier souhaitant organiser des compétitions.
-L’outil devra permettre de gérer un ou plusieurs compétitions.
+L’outil devra permettre de gérer une ou plusieurs compétitions.
 
 Chaque compétition est définie par plusieurs informations :
     • Le lieu de la compétition
@@ -60,6 +60,9 @@ class Compétition {
 class Catégorie {
     nbrPlaces: number
 }
+class Participant {
+    nbrPoints: number
+}
 
 class Joueur
 class Poule
@@ -70,9 +73,12 @@ Compétition "1" *-- "1..*" Catégorie: accueille >
 Catégorie "0..*" --> "1" GroupeAge
 Catégorie "0..*" --> "1" Genre
 Catégorie "0..*" --> "1" Série
-Joueur "2..*" -- "1" Catégorie: participe dans >
-Joueur "2..*" --* "1" Poule
 Poule "1..*" --* "1" Groupe
 Groupe "1..*" --* "1" Catégorie
+
+Joueur "1" -- "0..*" Participant
+Compétition "1" -- "2..*" Participant
+Participant "2..*" -- "1" Catégorie
+Poule "1" -- "2..*" Participant
 
 @enduml
