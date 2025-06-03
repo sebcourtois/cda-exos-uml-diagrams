@@ -1,0 +1,44 @@
+La fédération française de tennis de table lève des fonds dédiés à
+la création d’un outil complet de gestion de compétition.
+Cette application pourra être utilisée par les membres d’un club,
+une entreprise ou un particulier souhaitant organiser des compétitions.
+L’outil devra permettre de gérer une ou plusieurs compétitions.
+
+Chaque compétition est définie par plusieurs informations :
+    • Le lieu de la compétition
+    • Les catégories accueillies par la compétition
+    • Le nombre de participant.e.s par catégorie
+
+Les catégories sont définies par plusieurs informations :
+    - L’âge des participants
+    - La série
+    - Le genre
+
+Chaque joueur/joueuse est défini.e par :
+    - Un nombre de points pour le classement global (national)
+    - Un nombre de points propres à la compétition
+
+Les joueurs/joueuses seront réparti.e.s en groupes et chaque groupe est divisé en poules.
+
+@startuml
+left to right direction
+
+actor "Organisateur" as promoter
+actor "Joueur" as player
+
+rectangle "Championship organizer" {
+    usecase "Créer une compétition" as createChamp
+    usecase "Gérer les catégories" as manageCategory
+    usecase "Gérer les groupes et poules de participants" as manageParticipants
+    usecase "S'inscrire à une compétition" as checkInChamp
+}
+
+player -- checkInChamp
+promoter -- createChamp
+promoter -- manageCategory
+promoter -- manageParticipants
+
+manageCategory <. createChamp: <<include>>
+manageParticipants <. manageCategory: <<include>>
+
+@enduml
