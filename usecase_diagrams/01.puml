@@ -1,31 +1,38 @@
 @startuml
 left to right direction
 actor "Employé" as dude
-'actor "LDAP" as ldap
-rectangle "Annuaire LDAP" {
+actor "Système" as system
+
+rectangle "Gestionnaire de Profil" {
+  usecase "Changer photo profil" as changePhoto
   usecase "Se Connecter" as login
   usecase "Authentifier utilisateur" as checkAuth
   usecase "Rejeter connexion" as failAuth
-  usecase "Sélectionner photo" as pickPhoto
-  usecase "Transmettre photo" as uploadPhoto
-  usecase "Remplacer photo" as updatePhoto
+  usecase "Choisir nouvelle photo" as pickPhoto
+  usecase "Récupérer photo" as uploadPhoto
+  usecase "Vérifier format photo" as checkPhotoFormat
+  usecase "Mettre à jour photo" as updatePhoto
   usecase "Notifier succès" as notifySuccess
 }
 
+dude -- changePhoto
 dude -- login
 dude -- pickPhoto
-dude -- notifySuccess
 
-'checkAuth -- ldap
-'failAuth -- ldap
-'uploadPhoto -- ldap
-'updatePhoto -- ldap
-'notifySuccess -- ldap
+checkAuth -- system
+failAuth -- system
+uploadPhoto -- system
+checkPhotoFormat -- system
+updatePhoto -- system
+notifySuccess -- system
 
+changePhoto .> login: include
 login ..> checkAuth: include
 login <.. failAuth: extend
+login <. pickPhoto: extend
 pickPhoto ..> uploadPhoto: include
 pickPhoto <.. updatePhoto: extend
-updatePhoto ..> notifySuccess: include
+pickPhoto ..> checkPhotoFormat: include
+pickPhoto <.. notifySuccess: extend
 
 @enduml
