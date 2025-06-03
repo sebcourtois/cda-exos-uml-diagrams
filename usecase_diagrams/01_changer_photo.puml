@@ -1,38 +1,15 @@
 @startuml
 left to right direction
 actor "Employé" as dude
-actor "Système" as system
+
 
 rectangle "Gestionnaire de Profil" {
   usecase "Changer photo profil" as changePhoto
   usecase "Se Connecter" as login
-  usecase "Authentifier utilisateur" as checkAuth
-  usecase "Rejeter connexion" as failAuth
-  usecase "Choisir nouvelle photo" as pickPhoto
-  usecase "Récupérer photo" as uploadPhoto
-  usecase "Vérifier format photo" as checkPhotoFormat
-  usecase "Mettre à jour photo" as updatePhoto
-  usecase "Notifier succès" as notifySuccess
 }
 
 dude -- changePhoto
-dude -- login
-dude -- pickPhoto
+changePhoto .> login: <<include>>
 
-checkAuth -- system
-failAuth -- system
-uploadPhoto -- system
-checkPhotoFormat -- system
-updatePhoto -- system
-notifySuccess -- system
-
-changePhoto .> login: include
-login ..> checkAuth: include
-login <.. failAuth: extend
-login <. pickPhoto: extend
-pickPhoto ..> uploadPhoto: include
-pickPhoto <.. updatePhoto: extend
-pickPhoto ..> checkPhotoFormat: include
-pickPhoto <.. notifySuccess: extend
 
 @enduml
