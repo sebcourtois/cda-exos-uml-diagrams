@@ -1,0 +1,55 @@
+Il vous est demandé de mettre en place un service de streaming en ligne pour concurrencer
+Amazon Prime Video (et oui, rien que ça).
+Le site devra être accessible à tout utilisateur enregistré.
+Il existe deux profils d’utilisateurs :
+    • Compte découverte (gratuit)
+    • Compte premium
+
+Un utilisateur est défini par son nom et un numéro de compte (unique).
+Pour les comptes premium les informations de paiement sont stockées.
+
+Tout utilisateur doit pouvoir créer une playlist de films avec les contraintes suivantes :
+    • Compte découverte : l’utilisateur ne peut ajouter qu’un seul film à sa playlist et ne peux
+regarder qu’un film par jour.
+    • Compte premium : pas de limite pour la playlist et le nombre de film qu’il peut regarder.
+
+Il est possible pour les utilisateurs de créer une « famille » permettant d’obtenir une réduction sur
+les tarifs du compte premium. Les familles peuvent être composées de maximum 5 personnes.
+
+Tous les utilisateurs doivent avoir la capacité d’effectuer les opérations suivantes :
+    • Ajouter un film à leur playlist : attention, la plateforme présente une particularité, l’utilisateur
+ne peut regarder que les films contenus dans sa playlist
+    • Regarder un film de leur playlist : à la fin du visionnage, le film est automatiquement
+supprimé de la playlist
+    • Le système devra permettre d’afficher la liste des 5 derniers films regardés.
+
+Les films sont caractérisés par leur titre, une date de sortie et une liste d’acteurs.
+
+@startuml
+left to right direction
+actor "Utilisateur" as user
+rectangle "Service Streaming en ligne" {
+    usecase "Créer un profil" as checkIn
+    usecase "Créer un profil Premium" as checkInPremium
+    usecase "Créer un profil Découverte" as checkInFree
+    usecase "Ajouter des films à lire" as addMovieToPlay
+    usecase "Regarder un film" as watchMovie
+    usecase "Lister 5 derniers films regardés"
+    usecase "Associer une famille" as assignFamily
+    usecase "Procéder au paiement" as pay
+}
+
+checkIn <|-- checkInPremium
+checkIn <|-- checkInFree
+
+user -- checkIn
+user -- watchMovie
+user -- addMovieToPlay
+user -- assignFamily
+
+checkIn <.. addMovieToPlay: <<extend>>
+addMovieToPlay <. watchMovie: <<extend>>
+pay <. checkInPremium: <<include>>
+assignFamily .> checkIn: <<extend>>
+
+@enduml
