@@ -1,0 +1,32 @@
+Le système de commande de pizzas permet à l’utilisateur d’un navigateur web de commander des pizzas à livrer à domicile.
+Pour passer une commande, l’acheteur effectue une recherche pour trouver les articles à acheter,
+ajoute les articles un par un dans un panier et effectue éventuellement une nouvelle recherche pour trouver d’autres articles.
+Lorsque tous les articles ont été choisis, l’acheteur indique l’adresse de livraison.
+S’il ne paie pas en espèces, il fournit également les informations relatives à sa carte de crédit.
+Le système offre aux clients la possibilité de s’inscrire auprès de la pizzeria.
+Ils peuvent alors enregistrer leur nom et leur adresse,
+de sorte qu’ils n’aient pas à saisir ces informations à chaque fois qu’ils passent une commande.
+
+
+@startuml
+left to right direction
+
+actor "Client" as client
+rectangle "WebApp Pizza-vélo" {
+    usecase "Regarder la carte" as search
+    usecase "Passer une commande" as placeOrder
+    usecase "Payer la commande" as pay
+    usecase "Payer en espèce" as payCash
+    usecase "Payer par CB" as payByCard
+    usecase "Créer un compte" as signUp
+}
+
+pay <|-- payCash
+pay <|-- payByCard
+
+client -- search
+client -- placeOrder
+search <. placeOrder: <<extend>>
+placeOrder ..> pay: <<include>>
+placeOrder <.. signUp: <<extend>>
+@enduml
