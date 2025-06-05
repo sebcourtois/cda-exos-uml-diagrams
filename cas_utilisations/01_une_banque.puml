@@ -1,0 +1,28 @@
+Un client ordinaire peut se présenter à la banque X et demander l’ouverture d’un compte.
+Il remplit un formulaire et l’employé de la banque valide le formulaire pour ouvrir son compte.
+Un client peut déposer des fonds, lorsque le montant est supérieur à 5000 € ou que son âge est supérieur à 45 ans,
+un bonus sera calculé et offert au client.
+Un client de la CND(Compte Non-résident en Devises) peut également ouvrir un compte,
+déposer des fonds, mais il peut aussi convertir des devises.
+
+
+@startuml
+left to right direction
+
+actor "Client" as client
+actor "Non-résident" as client_cnd
+actor "Employé" as worker
+
+rectangle  Banque {
+    usecase "Ouvrir un compte" as createAccount
+    usecase "Déposer des fonds" as landFunds
+    usecase "Convertir des devises" as convert
+}
+
+client_cnd --|> client
+client -- createAccount
+client -- landFunds
+client_cnd -- convert
+createAccount -- worker
+
+@enduml
